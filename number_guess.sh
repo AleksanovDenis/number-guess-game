@@ -14,12 +14,12 @@ then
   #add new user in DB
   ADD_USER_RESULT=$($PSQL "INSERT INTO users (name) VALUES ('$USERNAME')")
   USER_ID=$($PSQL "SELECT user_id FROM users WHERE name='$USERNAME'")
-  echo -e "\nWelcome, $USERNAME! It looks like this is your first time here."
+  echo -e "Welcome, $USERNAME! It looks like this is your first time here."
 else
   #get user's  total number of games and the best game result 
   GAMES_PLAYED=$($PSQL "SELECT COUNT(*) FROM games WHERE user_id=$USER_ID")
   BEST_GAME=$($PSQL "SELECT MIN(number_of_guesses) FROM games WHERE user_id=$USER_ID")
-  echo -e "\nWelcome back, $USERNAME! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses."
+  echo -e "Welcome back, $USERNAME! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses."
 fi
 
 echo -e "\nGuess the secret number between 1 and 1000:"
@@ -44,5 +44,5 @@ do
   NUMBER_OF_GUESSES=$((NUMBER_OF_GUESSES + 1))
 done
 
-echo -e "\nYou guessed it in $NUMBER_OF_GUESSES tries. The secret number was $SECRET_NUMBER. Nice job!"
+echo -e "You guessed it in $NUMBER_OF_GUESSES tries. The secret number was $SECRET_NUMBER. Nice job!"
 INSERT_GAME_RESULT=$($PSQL "INSERT INTO games (user_id, number_of_guesses) VALUES ($USER_ID, $NUMBER_OF_GUESSES)")
